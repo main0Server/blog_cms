@@ -3,9 +3,9 @@ import { Layout } from '../components'
 
 import '../styles/globals.css'
 import '../styles/globals.scss'
-import type { AppProps } from 'next/app'
+// import type { AppProps } from 'next/app'
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }) {
   return (
     <Layout>
       <Component {...pageProps} />
