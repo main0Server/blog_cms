@@ -114,6 +114,7 @@ export const getSimilarPosts = async (categories, slug) => {
   const result = await request(graphqlAPI, query, { categories, slug })
   return result.posts
 }
+
 export const getCategories = async () => {
   const query = gql`
     query GetCategories {
@@ -127,3 +128,52 @@ export const getCategories = async () => {
   const result = await request(graphqlAPI, query)
   return result.categories
 }
+
+// http
+export const submitComment = async (obj) => {
+  const result = await fetch('/api/comments/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(obj),
+  })
+  return result.json()
+}
+
+export const getComments = async (slug) => {
+  const query = gql`
+    query GetComments($slug:String!) {
+      comments(where: {post: {slug:$slug}}){
+        name
+        createdAt
+        comment
+      }
+    }
+  `;
+
+  const result = await request(graphqlAPI, query, { slug });
+
+  return result.comments;
+};
+
+// export const getRecentPosts = async () => {
+//   const query = gql`
+//     query GetPostDetails() {
+//       posts(
+//         orderBy: createdAt_ASC
+//         last: 3
+//       ) {
+//         title
+//         featuredImage {
+//           url
+//         }
+//         createdAt
+//         slug
+//       }
+//     }
+//   `;
+//   const result = await request(graphqlAPI, query);
+
+//   return result.posts;
+// };
